@@ -1,0 +1,33 @@
+{
+  "name": "redlock-node",
+  "version": "0.0.1",
+  "description": "redis lock",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm install && mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/navyxie/redlock-node.git"
+  },
+  "keywords": [
+    "redis",
+    "lock"
+  ],
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^7.0.2",
+    "async":"^2.0.0"
+  },
+  "author": {
+    "name": "navyxie"
+  },
+  "license": "ISC",
+  "homepage": "https://github.com/navyxie/redlock-node.git",
+  "maintainers": [
+    {
+      "name": "navyxie",
+      "email": "navyxie2010@gmail.com"
+    }
+  ]
+}
