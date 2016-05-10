@@ -1,6 +1,6 @@
 {
   "name": "redlock-node",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "redis lock",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,9 @@
     "mocha": "^2.2.5",
     "should": "^7.0.2",
     "redis": "^2.4.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.3.3"
   },
   "author": {
     "name": "navyxie"
