@@ -44,7 +44,7 @@ Redlock.prototype.lock = function(resource,ttl,callback){
           return reject(err);
         }
       })
-  }).nodeify(callback);
+  }).asCallback(callback);
 }
 Redlock.prototype.unlock = function(lock,callback){
   var self = this;
@@ -62,6 +62,6 @@ Redlock.prototype.unlock = function(lock,callback){
           return resolve();
         }
       })
-  }).nodeify(callback);
+  }).asCallback(callback);
 }
 module.exports = Redlock;
