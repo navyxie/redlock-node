@@ -1,3 +1,8 @@
+var Promise = require('bluebird');
+var util = require('util');
+var EventEmitter = require('events');
+if(typeof EventEmitter.EventEmitter === 'function')
+  EventEmitter = EventEmitter.EventEmitter;
 function _randomStr(len){
   var baseString = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   len = len || 13;
@@ -10,30 +15,53 @@ function _randomStr(len){
 function _random(){
   return Date.now()+_randomStr();
 }
+
+function Lock(redlock, resource, value) {
+  this.redlock = redlock;
+  this.resource = resource;
+  this.value = value;
+}
+Lock.prototype.unlock = function unlock(callback) {
+  return this.redlock.unlock(this, callback);
+};
+
 function Redlock(client,option) {
   this.client = client;
   this.option = option;
 }
+util.inherits(Redlock, EventEmitter);
 Redlock.prototype.lock = function(resource,ttl,callback){
+  var self = this;
   var _val = _random();
-  this.client.SET(resource,_val,'EX',ttl,'NX',function(err,data){
-    if(!err && data === 'OK'){
-      callback(null,_val);
-    }else{
-      callback(err || 'resource: '+resource+' is locked.');
-    }
-  })
-}
-Redlock.prototype.unlock = function(resource,value,callback){
-  var that = this;
-  this.client.GET(resource,function(err,data){
-    if(!err && data === value){
-      that.client.DEL(resource,function(err){
-        callback(err);
+  return new Promise(function(resolve, reject) {
+      var lock = new Lock(self, resource, _val);
+      self.client.SET(resource,_val,'EX',ttl,'NX',function(err,data){
+        if(!err && data === 'OK'){
+          return resolve(lock);
+        }else{
+          var err = err || 'resource: '+resource+' is locked.';
+          self.emit('lockError', err);
+          return reject(err);
+        }
       })
-    }else{
-      callback(err);
-    }
-  })
+  }).nodeify(callback);
+}
+Redlock.prototype.unlock = function(lock,callback){
+  var self = this;
+  return new Promise(function(resolve, reject) {
+      self.client.GET(lock.resource,function(err,data){
+        if(!err && data === lock.value){
+          self.client.DEL(lock.resource,function(err){
+            if(err){
+              self.emit('unlockError',err)
+            }
+            return resolve();
+          })
+        }else{
+          self.emit('unlockError',err || 'resource:' + lock.resource + ' unable to unlock.')
+          return resolve();
+        }
+      })
+  }).nodeify(callback);
 }
 module.exports = Redlock;

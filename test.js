@@ -1,13 +1,14 @@
 var should = require('should');
 var RedLock = require('./index');
 describe('redlock',function(){
-  var client = require('redis').createClient();
+  this.timeout(5000);
+  var client = require('redis').createClient(6380,'localhost');
   var redlock = new RedLock(client);
   describe('test single',function(){
-    var lockVal;
+    var lock;
     it('#lock()',function(done){
-      redlock.lock('test-resource-lock',3,function(err,data){
-        lockVal = data;
+      redlock.lock('test-resource-lock',3,function(err,lockObj){
+        lock = lockObj;
         done(err);
       }) 
     });
@@ -18,7 +19,7 @@ describe('redlock',function(){
       }) 
     });
     it('#unlock()',function(done){
-      redlock.unlock('test-resource-lock',lockVal,function(err,data){
+      redlock.unlock(lock,function(err,data){
         done(err);
       })
     });
