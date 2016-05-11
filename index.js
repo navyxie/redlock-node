@@ -21,10 +21,12 @@ function Lock(redlock, resource, value) {
   this.resource = resource;
   this.value = value;
 }
-Lock.prototype.unlock = function unlock(callback) {
+Lock.prototype.unlock = function(callback) {
   return this.redlock.unlock(this, callback);
 };
-
+Lock.prototype.extend = function(callback){
+  return this.redlock.extend(this, ttl, callback)
+}
 function Redlock(client,option) {
   this.client = client;
   this.option = option;
@@ -62,6 +64,24 @@ Redlock.prototype.unlock = function(lock,callback){
           return resolve();
         }
       })
+  }).asCallback(callback);
+}
+Redlock.prototype.extend = function(lock,ttl,callback){
+  var self = this;
+  return new Promise(function(resolve, reject){
+    self.client.GET(lock.resource,function(err,data){
+      if(!err && data === lock.value){
+        self.client.expire(lock.resource,ttl,function(err,data){
+          if(err){
+            self.emit('extendError', err);
+          }
+          return resolve(err);
+        });
+      }else{
+        self.emit('extendError', err);
+        return reject('extendError:'+err);
+      }
+    })
   }).asCallback(callback);
 }
 module.exports = Redlock;
