@@ -10,6 +10,12 @@ var lock;
 `callback`:
 
 //lock
+/**
+*params:
+    @string: resource key
+    @number: lock second
+    @function: callback
+*/
 redlock.lock('test-resource-lock',3,function(err,lockInstance){
   lock = lockInstance;
   done(err);
@@ -19,6 +25,10 @@ redlock.unlock(lock,function(err,data){
   done(err);
 });
 
+//extend 
+redlock.extend(lock,2,function(err,data){
+  done(err);
+}); 
 
 `promise`:
 
