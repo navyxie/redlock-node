@@ -12,9 +12,9 @@ var lock;
 //lock
 /**
 *params:
-    @string: resource key
-    @number: lock second
-    @function: callback
+*    @string: resource key
+*    @number: lock second
+*    @function: callback
 */
 redlock.lock('test-resource-lock',3,function(err,lockInstance){
   lock = lockInstance;
