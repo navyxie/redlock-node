@@ -3,6 +3,7 @@ simple redis lock, support promise and callback.
 ## usage
 
 ```js
+var RedLock = require('redlock-node');
 var client = require('redis').createClient('port','host');
 var redlock = new RedLock(client);
 var lock;
@@ -40,4 +41,25 @@ redlock.lock('test-resource-lock-promise',3).done(
   function(){
   }
 ) 
+```
+
+## test
+```js
+//test
+npm test
+
+//code coverage
+
+npm run cov
+```
+
+## code coverage
+
+```html
+=============================== Coverage summary ===============================
+Statements   : 96.83% ( 183/189 )
+Branches     : 83.33% ( 30/36 )
+Functions    : 100% ( 77/77 )
+Lines        : 97.86% ( 183/187 )
+================================================================================
 ```
