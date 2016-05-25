@@ -1,10 +1,11 @@
 {
   "name": "redlock-node",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "redis lock",
   "main": "index.js",
   "scripts": {
-    "test": "npm install && mocha test.js"
+    "test":"npm install && ./node_modules/mocha/bin/_mocha --recursive test.js",
+    "cov":"./node_modules/.bin/istanbul cover --report lcovonly ./node_modules/mocha/bin/_mocha  -- --timeout 5000 --recursive test.js -R spec && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
     "mocha": "^2.2.5",
     "should": "^7.0.2",
     "redis": "^2.4.2",
-    "async":"^2.0.0"
+    "async":"^2.0.0",
+    "istanbul": "^0.4.3"
   },
   "dependencies": {
     "bluebird": "^3.3.5"
