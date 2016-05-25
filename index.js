@@ -24,7 +24,10 @@ function Lock(redlock, resource, value) {
 Lock.prototype.unlock = function(callback) {
   return this.redlock.unlock(this, callback);
 };
-Lock.prototype.extend = function(callback){
+Lock.prototype.extend = function(ttl, callback){
+  if (typeof ttl === 'function') {
+    return ttl('the first param ttl is missing.');
+  }
   return this.redlock.extend(this, ttl, callback)
 }
 function Redlock(client,option) {
@@ -36,6 +39,10 @@ Redlock.prototype.lock = function(resource,ttl,callback){
   var self = this;
   var _val = _random();
   return new Promise(function(resolve, reject) {
+    if (typeof ttl === 'function') {
+      callback = ttl;
+      return reject('the first param ttl is missing.');
+    }
     var lock = new Lock(self, resource, _val);
     self.client.SET(resource,_val,'EX',ttl,'NX',function(err,data){
       if(!err && data === 'OK'){
