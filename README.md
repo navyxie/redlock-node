@@ -1,5 +1,7 @@
 simple redis lock, support promise and callback.
 
+[![Build Status via Travis CI](https://travis-ci.org/navyxie/redlock-node.svg?branch=master)](https://travis-ci.org/navyxie/redlock-node)
+
 ## usage
 
 ```js
