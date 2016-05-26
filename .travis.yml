@@ -2,7 +2,7 @@ language: node_js
 
 repo_token: FoZO2GHuaZIz5j1cd4cqBMYPTAo273KTt
 
-node_js:  
+node_js: 
 
   - 0.10.35
 
@@ -13,5 +13,5 @@ script: npm test
 
 after_script: npm run cov
 
-after_success:
+after_success: 
   "curl -L -l https://coveralls.io/repos/github/navyxie/redlock-node/badge.svg?branch=master"
