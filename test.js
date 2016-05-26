@@ -3,7 +3,7 @@ var RedLock = require('./index');
 var async = require('async');
 describe('redlock',function(){
   this.timeout(5000);
-  var client = require('redis').createClient(6380,'localhost');
+  var client = require('redis').createClient(6379,'localhost');
   var redlock = new RedLock(client);
   describe('callback',function(){
     describe('test single',function(){
