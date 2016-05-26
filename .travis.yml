@@ -1,0 +1,10 @@
+language: node_js
+
+node_js:  
+
+  - 0.10.35
+
+services: 
+  - redis
+
+script: npm test
