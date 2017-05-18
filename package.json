@@ -1,6 +1,6 @@
 {
   "name": "redlock-node",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "redis lock",
   "main": "index.js",
   "scripts": {

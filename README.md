@@ -1,6 +1,6 @@
 simple redis lock, support promise and callback.
 
-[![Build Status via Travis CI](https://travis-ci.org/navyxie/redlock-node.svg?branch=master)](https://travis-ci.org/navyxie/redlock-node) [![Coverage Status](https://coveralls.io/repos/github/navyxie/redlock-node/badge.svg?branch=master)](https://coveralls.io/github/navyxie/redlock-node?branch=master)
+[![Build Status via Travis CI](https://travis-ci.org/navyxie/redlock-node.svg?branch=master)](https://travis-ci.org/navyxie/redlock-node) [![Coverage Status](https://coveralls.io/repos/github/navyxie/redlock-node/badge.svg?branch=master)](https://coveralls.io/github/navyxie/redlock-node?branch=master)[![NPM version](https://badge.fury.io/js/redlock-node.png)](http://badge.fury.io/js/redlock-node)
 
 ## usage
 
